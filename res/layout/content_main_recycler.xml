@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.akramhossain.islamicvideo.MainActivity"
+    tools:showIn="@layout/app_bar_main">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--RECENTLY WATCHED SECTION-->
+            <RelativeLayout
+                android:id="@+id/recently_watched_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/recent_watched_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/recent_watched_title"
+                    android:textColor="#000000"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recentlyWatchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/recent_watched_title"/>
+
+            </RelativeLayout>
+
+
+            <!--TOP CATEGORY SECTION-->
+            <RelativeLayout
+                android:id="@+id/top_category_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_below="@+id/recently_watched_section"
+                android:visibility="gone" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/category_title_section">
+
+                    <TextView
+                        android:id="@+id/top_category_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="0dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="5dp"
+                        android:text="@string/top_category_title"
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/category_view_all"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:clickable="true"
+                        android:gravity="right"
+                        android:paddingRight="8dp"
+                        android:text="@string/view_all"
+                        android:textColor="#000000"
+                        android:textSize="15dp" />
+
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/topCategoryView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_below="@+id/category_title_section"/>
+
+            </RelativeLayout>
+
+
+            <!--FETURED VIDEO SECTION-->
+            <RelativeLayout
+                android:id="@+id/featured_section"
+                android:layout_below="@+id/top_category_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/featured_title_section">
+
+                    <TextView
+                        android:id="@+id/home_featured_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="0dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="5dp"
+                        android:text="@string/featured_title"
+                        android:textColor="#000000"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/featured_view_all"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:clickable="true"
+                        android:gravity="right"
+                        android:paddingRight="8dp"
+                        android:text="@string/view_all"
+                        android:textColor="#000000"
+                        android:textSize="15dp" />
+
+                </RelativeLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_below="@+id/featured_title_section"/>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/browse_all_button"
+                    android:layout_below="@+id/recyclerview">
+
+                    <Button
+                        android:id="@+id/btn_browse_all"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="Browse All Video"
+                        android:gravity="center"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="#FFFFFF"
+                        android:padding="8dp"
+                        android:background="@color/colorPrimary"/>
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center|center_horizontal"
+                android:visibility="gone" />
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

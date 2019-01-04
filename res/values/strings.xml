@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">Islamic Video</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="welcome">Islamic Video</string>
+    <string name="welcome_email">android.studio@android.com</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_check_new_version">Check for new version</string>
+    <string name="menu_rate_us">Rate us</string>
+    <string name="menu_help_feedback">Help &amp; Feedback</string>
+    <string name="menu_about">About</string>
+    <string name="menu_terms">Terms &amp; Conditions</string>
+
+    <string name="nav_categories">Categories</string>
+    <string name="nav_favorites">Favorites</string>
+    <string name="nav_recently_watched">Watch History</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="featured_title">FEATURED</string>
+    <string name="featured_subtitle_title">Featured videos</string>
+    <string name="categories_title">CATEGORIES</string>
+    <string name="categories_subtitle_title">List of all category</string>
+    <string name="recent_watched_title">RECENTLY PLAYED</string>
+    <string name="recent_watched_subtitle_title">Recently played by others</string>
+    <string name="top_category_title">TOP CATEGORIES</string>
+    <string name="top_category_subtitle_title">List of top category</string>
+    <string name="view_all">View all</string>
+    <string name="related_title">RELATED VIDEOS</string>
+    <string name="related_subtitle">List of related videos</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_browse">Browse</string>
+    <string name="feedbacktype1">Praise</string>
+    <string name="feedbacktype2">Gripe</string>
+    <string name="feedbacktype3">Suggestion</string>
+    <string name="feedbacktype4">Bug</string>
+    <string name="feedbacktitle">Enter feedback details</string>
+    <string name="feedbackname">Your Name</string>
+    <string name="feedbackemail">Your Email</string>
+    <string name="feedbacktype">Type</string>
+    <string name="feedbackbody">Comments</string>
+    <string name="feedbackresponse">Would you like an email response?</string>
+    <string name="feedbackbutton">Send Feedback</string>
+    <string name="clear_history"><u>Clear History</u></string>
+
+    <string-array name="feedbacktypelist">
+        <item>@string/feedbacktype1</item>
+        <item>@string/feedbacktype2</item>
+        <item>@string/feedbacktype3</item>
+        <item>@string/feedbacktype4</item>
+    </string-array>
+
+    <string name="text_warning">Warning</string>
+    <string name="text_enable_internet">Please enable internet connection</string>
+    <string name="text_ok">OK</string>
+</resources>
