@@ -70,7 +70,7 @@ public class VideoPlayActivity extends AppCompatActivity
     Boolean isInternetPresent = false;
 
 
-    private String YouTubeKey = "AIzaSyDyNNHc5HLwaCUJCncDWl0E9Q_Frdk8HYU";
+    private String YouTubeKey = "AI****************************U";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
