@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.akramhossain.islamicvideo.Adapter.RecyclerViewAdapter;
 import com.akramhossain.islamicvideo.Config.ConnectionDetector;
 import com.akramhossain.islamicvideo.Config.Db;
+import com.akramhossain.islamicvideo.Config.Main;
 import com.akramhossain.islamicvideo.Listener.RecyclerTouchListener;
 import com.akramhossain.islamicvideo.Models.Video;
 import com.akramhossain.islamicvideo.Tasks.VideoPlayJsonFromUrlTask;
@@ -70,7 +71,7 @@ public class VideoPlayActivity extends AppCompatActivity
     Boolean isInternetPresent = false;
 
 
-    private String YouTubeKey = "AIzaSyDyNNHc5HLwaCUJCncDWl0E9Q_Frdk8HYU";
+    private String YouTubeKey = Main.YouTubeKey;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

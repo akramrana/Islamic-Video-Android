@@ -8,4 +8,5 @@ public class Main {
 
     //public static String host = "http://10.0.2.2/islamicvideo/";
     public static String host = "http://websites.codxplore.com/islamicvideo/";
+    public static String YouTubeKey = "AIzaSyDyNNHc5HLwaCUJCncDWl0E9Q_Frdk8HYU";
 }
