@@ -1,7 +1,6 @@
 package com.akramhossain.islamicvideo.Adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,8 @@ import com.akramhossain.islamicvideo.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Lenovo on 8/18/2018.
@@ -41,7 +42,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         Category cg = categories.get(position);
         rvHolder.categoryId.setText(cg.getCategory_id());
         rvHolder.titleTxt.setText(cg.getName());
-        Picasso.with(c).load(cg.getImageUrl()).into(rvHolder.thumbnail);
+        Picasso.get().load(cg.getImageUrl()).into(rvHolder.thumbnail);
     }
 
     @Override

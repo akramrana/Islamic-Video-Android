@@ -4,19 +4,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -46,6 +35,16 @@ import java.util.ArrayList;
 
 import com.akramhossain.islamicvideo.Models.Video;
 import com.akramhossain.islamicvideo.Tasks.GetJsonFromUrlTask;
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.akramhossain.islamicvideo.Config.Main.host;
 
@@ -56,16 +55,19 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView recyclerview;
     private RecyclerView recentlyWatchView;
     private RecyclerView topCategoryView;
+    private RecyclerView mostViewed;
 
     private ArrayList<Book> books;
     private ArrayList<Video> videos;
     private ArrayList<RecentlyWatched> recentlyWatches;
     private ArrayList<Category> categories;
+    private ArrayList<RecentlyWatched> mostViewedList;
 
     private ArrayAdapter<Book> adapter;
 
     private RecyclerViewAdapter rvAdapter;
     private RecentlyWatchViewAdapter rwAdapter;
+    private RecentlyWatchViewAdapter mvAdapter;
     private TopCategoryAdapter tcAdapter;
 
     private final static String TAG = MainActivity.class.getSimpleName();
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity
     private RelativeLayout recently_watched_section;
     private RelativeLayout top_category_section;
     private RelativeLayout featured_section;
+    private RelativeLayout most_viewed_section;
     private static final int TIME_INTERVAL = 2000;
     private long mBackPressed;
     ConnectionDetector cd;
@@ -104,6 +107,7 @@ public class MainActivity extends AppCompatActivity
         recently_watched_section = (RelativeLayout) findViewById(R.id.recently_watched_section);
         top_category_section = (RelativeLayout) findViewById(R.id.top_category_section);
         featured_section = (RelativeLayout) findViewById(R.id.featured_section);
+        most_viewed_section = (RelativeLayout) findViewById(R.id.most_viewed_section);
 
         //FEATURED VIDEO LIST
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
@@ -199,6 +203,27 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        //MOST VIEWD VIDEO
+        mostViewed = (RecyclerView) findViewById(R.id.mostViewed);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
+        mostViewed.setLayoutManager(mLinearLayoutManager);
+        setMosthViewAdapter();
+        mostViewed.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mostViewed, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                RecentlyWatched rw = mostViewedList.get(position);
+                //Toast.makeText(getApplicationContext(), rw.getVideo_id() + " is selected!", Toast.LENGTH_SHORT).show();
+                Intent in = new Intent(getApplicationContext(),VideoPlayActivity.class);
+                in.putExtra("video_id", rw.getVideo_id());
+                in.putExtra("video_name", rw.getName());
+                startActivityForResult(in, 100);
+            }
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
     }
 
     private void getDataFromInternet() {
@@ -232,6 +257,12 @@ public class MainActivity extends AppCompatActivity
         categories = new ArrayList<Category>();
         tcAdapter = new TopCategoryAdapter(MainActivity.this, categories);
         topCategoryView.setAdapter(tcAdapter);
+    }
+
+    private void setMosthViewAdapter() {
+        mostViewedList = new ArrayList<RecentlyWatched>();
+        mvAdapter = new RecentlyWatchViewAdapter(MainActivity.this, mostViewedList);
+        mostViewed.setAdapter(mvAdapter);
     }
 
     @Override
@@ -324,6 +355,7 @@ public class MainActivity extends AppCompatActivity
             JSONArray jArray = new JSONArray(json.getString("top_categories"));
             JSONArray jArray1 = new JSONArray(json.getString("recently_watched"));
             JSONArray jArray2 = new JSONArray(json.getString("featured_videos"));
+            JSONArray jArray3 = new JSONArray(json.getString("most_viewed_videos"));
 
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject jObject = jArray.getJSONObject(i);
@@ -357,13 +389,25 @@ public class MainActivity extends AppCompatActivity
                 videos.add(video);
             }
 
+            for (int i = 0; i < jArray3.length(); i++) {
+                JSONObject jObject = jArray3.getJSONObject(i);
+                //most viewed videos
+                RecentlyWatched rw1 = new RecentlyWatched();
+                rw1.setVideo_id(jObject.getString("id"));
+                rw1.setName(jObject.getString("title"));
+                rw1.setImageUrl(jObject.getString("image"));
+                mostViewedList.add(rw1);
+            }
+
             rvAdapter.notifyDataSetChanged();
             rwAdapter.notifyDataSetChanged();
             tcAdapter.notifyDataSetChanged();
+            mvAdapter.notifyDataSetChanged();
 
             recently_watched_section.setVisibility(View.VISIBLE);
             top_category_section.setVisibility(View.VISIBLE);
             featured_section.setVisibility(View.VISIBLE);
+            most_viewed_section.setVisibility(View.VISIBLE);
 
         } catch (JSONException e) {
             e.printStackTrace();

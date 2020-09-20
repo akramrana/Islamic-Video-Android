@@ -2,7 +2,7 @@ package com.akramhossain.islamicvideo.Adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +46,7 @@ public class WatchHistoryViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         rvHolder.videoId.setText(video.getVideo_id());
         rvHolder.titleTxt.setText(video.getTitle());
         rvHolder.categoryNameTxt.setText(video.getCategory_name());
-        Picasso.with(c).load(video.getImage()).into(rvHolder.thumbnail);
+        Picasso.get().load(video.getImage()).into(rvHolder.thumbnail);
     }
 
     @Override

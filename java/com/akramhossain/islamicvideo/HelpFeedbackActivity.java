@@ -9,15 +9,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
@@ -35,6 +26,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.akramhossain.islamicvideo.Config.ConnectionDetector;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONObject;
 
@@ -54,6 +46,13 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import static com.akramhossain.islamicvideo.Config.Main.host;
 

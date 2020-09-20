@@ -49,7 +49,7 @@ public class CustomListViewAdapter extends ArrayAdapter<Book> {
 
         holder.name.setText(book.getName());
         holder.authorName.setText(book.getAuthorName());
-        Picasso.with(activity).load(book.getImageUrl()).into(holder.image);
+        Picasso.get().load(book.getImageUrl()).into(holder.image);
 
         return convertView;
     }

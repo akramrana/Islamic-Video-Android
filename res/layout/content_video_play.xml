@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,15 +9,26 @@
     tools:showIn="@layout/app_bar_main">
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
-        <fragment
-            android:id="@+id/youtubeplayerfragment"
-            android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+<!--        <fragment-->
+<!--            android:id="@+id/youtubeplayerfragment"-->
+<!--            android:name="com.google.android.youtube.player.YouTubePlayerSupportFragmentX"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content" />-->
+
+        <fragment android:id="@+id/youtubeplayerfragment"
+            android:name="com.google.android.youtube.player.YouTubePlayerSupportFragmentX"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/tv_instructions_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/video_title"
@@ -28,7 +39,6 @@
             android:gravity="center"
             android:paddingLeft="8dp"
             android:paddingRight="5dp"
-            android:textColor="#000000"
             android:textSize="14dp"
             android:textStyle="bold" />
 
@@ -42,22 +52,21 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
+                android:layout_weight="0.9"
                 android:padding="8dp"
-                android:textColor="#333"
-                android:textStyle="bold"
-                android:layout_weight="0.9"/>
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:padding="8dp"
                 android:layout_gravity="right"
+                android:layout_marginTop="1dp"
                 android:layout_weight="0.1"
+                android:clickable="true"
+                android:padding="8dp"
                 android:src="@drawable/ic_nav_favorites"
-                android:visibility="gone"
-                android:clickable="true"/>
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -79,13 +88,12 @@
                     android:paddingLeft="8dp"
                     android:paddingRight="5dp"
                     android:text="@string/related_title"
-                    android:textColor="#000000"
                     android:textSize="15dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/related_video_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -102,4 +110,4 @@
     </LinearLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

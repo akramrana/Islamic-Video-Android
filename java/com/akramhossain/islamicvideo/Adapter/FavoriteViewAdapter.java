@@ -5,8 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -57,7 +56,7 @@ public class FavoriteViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         rvHolder.videoId.setText(video.getVideo_id());
         rvHolder.titleTxt.setText(video.getTitle());
         rvHolder.categoryNameTxt.setText(video.getCategory_name());
-        Picasso.with(c).load(video.getImage()).into(rvHolder.thumbnail);
+        Picasso.get().load(video.getImage()).into(rvHolder.thumbnail);
         rvHolder.buttonViewOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

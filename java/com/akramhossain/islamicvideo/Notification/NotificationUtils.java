@@ -24,13 +24,14 @@ import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 
 import com.akramhossain.islamicvideo.BrowseActivity;
 import com.akramhossain.islamicvideo.MainActivity;
 import com.akramhossain.islamicvideo.R;
 import com.akramhossain.islamicvideo.VideoPlayActivity;
+
+import androidx.core.app.NotificationCompat;
 
 public class NotificationUtils {
     private static final int NOTIFICATION_ID = 200;

@@ -2,7 +2,7 @@ package com.akramhossain.islamicvideo.Adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +43,7 @@ public class RecentlyWatchViewAdapter extends RecyclerView.Adapter<RecyclerView.
         RecentlyWatched rw = recentlyWatches.get(position);
         rvHolder.videoId.setText(rw.getVideo_id());
         rvHolder.titleTxt.setText(rw.getName());
-        Picasso.with(c).load(rw.getImageUrl()).into(rvHolder.thumbnail);
+        Picasso.get().load(rw.getImageUrl()).into(rvHolder.thumbnail);
     }
 
     @Override

@@ -5,7 +5,7 @@ package com.akramhossain.islamicvideo.Adapter;
  */
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         rvHolder.titleTxt.setText(video.getTitle());
         rvHolder.categoryNameTxt.setText(video.getCategory_name());
         rvHolder.views.setText(video.getViews()+" views");
-        Picasso.with(c).load(video.getImage()).into(rvHolder.thumbnail);
+        Picasso.get().load(video.getImage()).into(rvHolder.thumbnail);
     }
 
     @Override

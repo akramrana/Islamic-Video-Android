@@ -6,19 +6,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,15 +21,26 @@ import com.akramhossain.islamicvideo.Config.Main;
 import com.akramhossain.islamicvideo.Listener.RecyclerTouchListener;
 import com.akramhossain.islamicvideo.Models.Video;
 import com.akramhossain.islamicvideo.Tasks.VideoPlayJsonFromUrlTask;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.google.android.youtube.player.YouTubePlayerSupportFragmentX;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static com.akramhossain.islamicvideo.Config.Main.host;
 
@@ -61,7 +62,7 @@ public class VideoPlayActivity extends AppCompatActivity
     private RecyclerView recyclerview;
     private ArrayList<Video> videos;
     private RecyclerViewAdapter rvAdapter;
-    YouTubePlayerFragment youTubePlayerFragment;
+    YouTubePlayerSupportFragmentX youTubePlayerFragment;
     YouTubePlayer.OnInitializedListener mOnInitializedListener;
     public String youtubeVideoId;
     Db dbhelper;
@@ -123,7 +124,7 @@ public class VideoPlayActivity extends AppCompatActivity
             }
         }));
 
-        youTubePlayerFragment = (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtubeplayerfragment);
+        youTubePlayerFragment = (YouTubePlayerSupportFragmentX) getSupportFragmentManager().findFragmentById(R.id.youtubeplayerfragment);
 
         dbhelper = new Db(getApplicationContext());
 
