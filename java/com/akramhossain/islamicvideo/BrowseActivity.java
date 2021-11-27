@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.akramhossain.islamicvideo.Adapter.RecyclerViewAdapter;
 import com.akramhossain.islamicvideo.Config.ConnectionDetector;
+import com.akramhossain.islamicvideo.Config.DeviceDetector;
 import com.akramhossain.islamicvideo.Listener.RecyclerTouchListener;
 import com.akramhossain.islamicvideo.Models.Video;
 import com.akramhossain.islamicvideo.Tasks.BrowseJsonFromUrlTask;
@@ -26,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,6 +59,8 @@ public class BrowseActivity extends AppCompatActivity
     String double_click_exit = "1";
     ConnectionDetector cd;
     Boolean isInternetPresent = false;
+    DeviceDetector dd;
+    Boolean isTablet = false;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -88,8 +92,16 @@ public class BrowseActivity extends AppCompatActivity
 //        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 //        navigationView.setNavigationItemSelectedListener(this);
 
+        dd = new DeviceDetector(getApplicationContext());
+        isTablet = dd.isTablet();
+        Log.e("Device Type", "Device is tablet: " + isTablet.toString());
+
         recyclerview = (RecyclerView) findViewById(R.id.browse_video_list);
-        mLayoutManager = new LinearLayoutManager(this);
+        if(isTablet) {
+            mLayoutManager = new GridLayoutManager(this, 2);
+        }else {
+            mLayoutManager = new LinearLayoutManager(this);
+        }
         recyclerview.setLayoutManager(mLayoutManager);
         setRecyclerViewAdapter();
         recyclerview.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerview, new RecyclerTouchListener.ClickListener() {

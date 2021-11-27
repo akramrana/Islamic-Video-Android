@@ -19,6 +19,7 @@ import com.akramhossain.islamicvideo.Adapter.RecentlyWatchViewAdapter;
 import com.akramhossain.islamicvideo.Adapter.RecyclerViewAdapter;
 import com.akramhossain.islamicvideo.Adapter.TopCategoryAdapter;
 import com.akramhossain.islamicvideo.Config.ConnectionDetector;
+import com.akramhossain.islamicvideo.Config.DeviceDetector;
 import com.akramhossain.islamicvideo.Listener.RecyclerTouchListener;
 import com.akramhossain.islamicvideo.Models.Book;
 import com.akramhossain.islamicvideo.Models.RecentlyWatched;
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity
     private long mBackPressed;
     ConnectionDetector cd;
     Boolean isInternetPresent = false;
+    DeviceDetector dd;
+    Boolean isTablet = false;
 
 
     @Override
@@ -109,9 +112,16 @@ public class MainActivity extends AppCompatActivity
         featured_section = (RelativeLayout) findViewById(R.id.featured_section);
         most_viewed_section = (RelativeLayout) findViewById(R.id.most_viewed_section);
 
+        dd = new DeviceDetector(getApplicationContext());
+        isTablet = dd.isTablet();
+        Log.e("Device Type", "Device is tablet: " + isTablet.toString());
         //FEATURED VIDEO LIST
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
-        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        if(isTablet) {
+            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+        }else{
+            recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        }
         setRecyclerViewAdapter();
         recyclerview.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerview, new RecyclerTouchListener.ClickListener() {
             @Override

@@ -63,8 +63,11 @@ public class BrowseJsonFromUrlTask extends AsyncTask<Void, Void, String> {
 
         // getting JSON string from URL
         JSONObject json = jParser.getJSONFromUrl(url);
-
-        return json;
+        if(json.length()==0) {
+            return null;
+        }else {
+            return json;
+        }
     }
 
     private class JSONGetter {

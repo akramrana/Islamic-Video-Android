@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.akramhossain.islamicvideo.Adapter.CategoryAdapter;
 import com.akramhossain.islamicvideo.Adapter.GridViewAdapter;
 import com.akramhossain.islamicvideo.Config.ConnectionDetector;
+import com.akramhossain.islamicvideo.Config.DeviceDetector;
 import com.akramhossain.islamicvideo.Listener.RecyclerTouchListener;
 import com.akramhossain.islamicvideo.Models.Category;
 import com.akramhossain.islamicvideo.Models.GridItem;
@@ -64,6 +65,8 @@ public class CategoryActivity extends AppCompatActivity
     String double_click_exit = "1";
     ConnectionDetector cd;
     Boolean isInternetPresent = false;
+    DeviceDetector dd;
+    Boolean isTablet = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,8 +92,16 @@ public class CategoryActivity extends AppCompatActivity
 //        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 //        navigationView.setNavigationItemSelectedListener(this);
 
+        dd = new DeviceDetector(getApplicationContext());
+        isTablet = dd.isTablet();
+        Log.e("Device Type", "Device is tablet: " + isTablet.toString());
+
         categoryView = (RecyclerView) findViewById(R.id.categoryview);
-        categoryView.setLayoutManager(new GridLayoutManager(this,2));
+        if(isTablet) {
+            categoryView.setLayoutManager(new GridLayoutManager(this, 3));
+        }else {
+            categoryView.setLayoutManager(new GridLayoutManager(this, 2));
+        }
         setCategoryViewAdapter();
 
         categoryView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), categoryView, new RecyclerTouchListener.ClickListener() {
