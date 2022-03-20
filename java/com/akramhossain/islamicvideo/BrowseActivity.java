@@ -159,7 +159,7 @@ public class BrowseActivity extends AppCompatActivity
     private void getDataFromInternet() {
         itShouldLoadMore = false;
         if (isInternetPresent) {
-            new BrowseJsonFromUrlTask(this, URL).execute();
+            new BrowseJsonFromUrlTask(this, URL);
         }
         else{
             AlertDialog.Builder alert = new AlertDialog.Builder(BrowseActivity.this);

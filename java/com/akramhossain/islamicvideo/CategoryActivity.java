@@ -134,7 +134,7 @@ public class CategoryActivity extends AppCompatActivity
 
     private void getDataFromInternet() {
         if (isInternetPresent) {
-            new CategoryJsonFromUrlTask(this, FEED_URL).execute();
+            new CategoryJsonFromUrlTask(this, FEED_URL);
         }
         else {
             AlertDialog.Builder alert = new AlertDialog.Builder(CategoryActivity.this);

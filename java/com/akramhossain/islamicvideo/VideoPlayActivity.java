@@ -176,7 +176,7 @@ public class VideoPlayActivity extends AppCompatActivity
 
     private void getDataFromInternet() {
         if (isInternetPresent) {
-            new VideoPlayJsonFromUrlTask(this, URL).execute();
+            new VideoPlayJsonFromUrlTask(this, URL);
         }
         else{
             AlertDialog.Builder alert = new AlertDialog.Builder(VideoPlayActivity.this);

@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity
 
     private void getDataFromInternet() {
         if (isInternetPresent) {
-            new GetJsonFromUrlTask(this, url).execute();
+            new GetJsonFromUrlTask(this, url);
         }else {
             AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
             alert.setTitle(R.string.text_warning);

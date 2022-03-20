@@ -80,7 +80,7 @@ public class CmsActivity extends AppCompatActivity
 
     private void getDataFromInternet() {
         if (isInternetPresent) {
-            new CmsJsonFromUrlTask(this, URL).execute();
+            new CmsJsonFromUrlTask(this, URL);
         }
         else{
             AlertDialog.Builder alert = new AlertDialog.Builder(CmsActivity.this);

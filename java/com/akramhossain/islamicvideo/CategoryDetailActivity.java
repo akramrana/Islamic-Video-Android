@@ -163,7 +163,7 @@ public class CategoryDetailActivity extends AppCompatActivity
     private void getDataFromInternet() {
         itShouldLoadMore = false;
         if (isInternetPresent) {
-            new CategoryDetailsJsonFromUrlTask(this, URL).execute();
+            new CategoryDetailsJsonFromUrlTask(this, URL);
         }
         else {
             AlertDialog.Builder alert = new AlertDialog.Builder(CategoryDetailActivity.this);
