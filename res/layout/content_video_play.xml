@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
@@ -21,14 +21,20 @@
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content" />-->
 
-        <fragment android:id="@+id/youtubeplayerfragment"
-            android:name="com.google.android.youtube.player.YouTubePlayerSupportFragmentX"
-            android:layout_width="match_parent"
+<!--        <fragment android:id="@+id/youtubeplayerfragment"-->
+<!--            android:name="com.google.android.youtube.player.YouTubePlayerSupportFragmentX"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/tv_instructions_header"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <WebView
+            android:id="@+id/videoview"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/tv_instructions_header"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            />
 
         <TextView
             android:id="@+id/video_title"

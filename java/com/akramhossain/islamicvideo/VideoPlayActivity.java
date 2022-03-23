@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,11 +26,11 @@ import com.akramhossain.islamicvideo.Listener.RecyclerTouchListener;
 import com.akramhossain.islamicvideo.Models.Video;
 import com.akramhossain.islamicvideo.Tasks.VideoPlayJsonFromUrlTask;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerFragment;
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.google.android.youtube.player.YouTubePlayerSupportFragmentX;
+//import com.google.android.youtube.player.YouTubeInitializationResult;
+//import com.google.android.youtube.player.YouTubePlayer;
+//import com.google.android.youtube.player.YouTubePlayerFragment;
+//import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+//import com.google.android.youtube.player.YouTubePlayerSupportFragmentX;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,8 +67,8 @@ public class VideoPlayActivity extends AppCompatActivity
     private RecyclerView recyclerview;
     private ArrayList<Video> videos;
     private RecyclerViewAdapter rvAdapter;
-    YouTubePlayerSupportFragmentX youTubePlayerFragment;
-    YouTubePlayer.OnInitializedListener mOnInitializedListener;
+    //YouTubePlayerSupportFragmentX youTubePlayerFragment;
+    //YouTubePlayer.OnInitializedListener mOnInitializedListener;
     public String youtubeVideoId;
     Db dbhelper;
     JSONObject details;
@@ -74,6 +77,9 @@ public class VideoPlayActivity extends AppCompatActivity
     Boolean isInternetPresent = false;
     DeviceDetector dd;
     Boolean isTablet = false;
+    WebView mWebView;
+    Integer height = 300;
+
 
 
     private String YouTubeKey = Main.YouTubeKey;
@@ -115,8 +121,10 @@ public class VideoPlayActivity extends AppCompatActivity
         recyclerview = (RecyclerView) findViewById(R.id.related_video_list);
         if(isTablet) {
             recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+            height = 480;
         }else {
             recyclerview.setLayoutManager(new LinearLayoutManager(this));
+            height = 300;
         }
         setRecyclerViewAdapter();
         recyclerview.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerview, new RecyclerTouchListener.ClickListener() {
@@ -136,7 +144,7 @@ public class VideoPlayActivity extends AppCompatActivity
             }
         }));
 
-        youTubePlayerFragment = (YouTubePlayerSupportFragmentX) getSupportFragmentManager().findFragmentById(R.id.youtubeplayerfragment);
+        //youTubePlayerFragment = (YouTubePlayerSupportFragmentX) getSupportFragmentManager().findFragmentById(R.id.youtubeplayerfragment);
 
         dbhelper = new Db(getApplicationContext());
 
@@ -172,6 +180,8 @@ public class VideoPlayActivity extends AppCompatActivity
                 }
             }
         });
+
+        mWebView=(WebView)findViewById(R.id.videoview);
     }
 
     private void getDataFromInternet() {
@@ -310,19 +320,37 @@ public class VideoPlayActivity extends AppCompatActivity
                 Log.e("Watch History", "added failed");
             }
 
-            mOnInitializedListener = new YouTubePlayer.OnInitializedListener(){
-                @Override
-                public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
-                    if(!wasRestored) {
-                        youTubePlayer.loadVideo(youtubeVideoId);
-                    }
-                }
-                @Override
-                public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult error) {
+//            mOnInitializedListener = new YouTubePlayer.OnInitializedListener(){
+//                @Override
+//                public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
+//                    if(!wasRestored) {
+//                        youTubePlayer.loadVideo(youtubeVideoId);
+//                    }
+//                }
+//                @Override
+//                public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult error) {
+//
+//                }
+//            };
+//            youTubePlayerFragment.initialize(this.YouTubeKey, mOnInitializedListener);
 
+
+
+            String iframeStr = "https://www.youtube.com/embed/"+youtubeVideoId+"?rel=0&amp;autoplay=1";
+
+            Log.d("Youtube Url:", iframeStr);
+
+            String videoStr = "<html><body style=\"margin:0;\"><iframe style=\"width:100%; height:"+height+"px; margin:0px; border:0px;\" src=\""+iframeStr+"\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe></body></html>";
+
+            mWebView.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    return false;
                 }
-            };
-            youTubePlayerFragment.initialize(this.YouTubeKey, mOnInitializedListener);
+            });
+            WebSettings ws = mWebView.getSettings();
+            ws.setJavaScriptEnabled(true);
+            mWebView.loadData(videoStr, "text/html", "utf-8");
 
             try {
                 SQLiteDatabase db = dbhelper.getWritableDatabase();
