@@ -1,12 +1,8 @@
 package com.akramhossain.islamicvideo.Service;
 
-import android.app.Service;
 import android.content.Intent;
-import android.os.IBinder;
 import android.util.Log;
 
-import com.akramhossain.islamicvideo.BrowseActivity;
-import com.akramhossain.islamicvideo.MainActivity;
 import com.akramhossain.islamicvideo.Notification.NotificationUtils;
 import com.akramhossain.islamicvideo.Notification.NotificationVO;
 import com.akramhossain.islamicvideo.VideoPlayActivity;
@@ -27,31 +23,77 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService  {
     private static final String TARGET_ID = "target_id";
 
     @Override
+    public void handleIntent(Intent intent) {
+        Log.e(TAG, "handleIntent");
+        try
+        {
+            if (intent.getExtras() != null)
+            {
+                RemoteMessage.Builder builder = new RemoteMessage.Builder("MyFirebaseMessagingService");
+                for (String key : intent.getExtras().keySet())
+                {
+                    builder.addData(key, intent.getExtras().get(key).toString());
+                }
+                onMessageReceived(builder.build());
+            }
+            else
+            {
+                super.handleIntent(intent);
+            }
+        }
+        catch (Exception e)
+        {
+            super.handleIntent(intent);
+        }
+    }
+
+    @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
         // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
+        /*if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             Map<String, String> data = remoteMessage.getData();
+
+            Log.d(TAG, "data payload: " + data.toString());
             handleData(data);
 
         } else if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            handleNotification(remoteMessage.getNotification());
-        }// Check if message contains a notification payload.
+            String imageUrl = remoteMessage.getData().get("image");
+            handleNotification(remoteMessage.getNotification(), imageUrl);
+        }*/
+
+        if (remoteMessage.getData().size() > 0) {
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+        }
+
+        if (remoteMessage.getNotification() != null) {
+            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            String imageUrl = remoteMessage.getData().get("image");
+            String targetId = remoteMessage.getData().get("target_id");
+            handleNotification(remoteMessage.getNotification(), imageUrl, targetId);
+        }
 
     }
 
-    private void handleNotification(RemoteMessage.Notification RemoteMsgNotification) {
+    private void handleNotification(RemoteMessage.Notification RemoteMsgNotification, String iconUrl, String targetId) {
         String message = RemoteMsgNotification.getBody();
         String title = RemoteMsgNotification.getTitle();
+
         NotificationVO notificationVO = new NotificationVO();
         notificationVO.setTitle(title);
         notificationVO.setMessage(message);
+        notificationVO.setIconUrl(iconUrl);
+        notificationVO.setTargetId(targetId);
 
-        Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+        //Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent resultIntent = new Intent(getApplicationContext(), VideoPlayActivity.class);
+        resultIntent.putExtra("video_id", targetId);
+        resultIntent.putExtra("video_name", title);
+
         NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
         notificationUtils.displayNotification(notificationVO, resultIntent);
         notificationUtils.playNotificationSound();

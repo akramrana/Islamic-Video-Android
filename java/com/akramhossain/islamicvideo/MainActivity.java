@@ -1,13 +1,12 @@
 package com.akramhossain.islamicvideo;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -22,11 +21,17 @@ import com.akramhossain.islamicvideo.Config.ConnectionDetector;
 import com.akramhossain.islamicvideo.Config.DeviceDetector;
 import com.akramhossain.islamicvideo.Listener.RecyclerTouchListener;
 import com.akramhossain.islamicvideo.Models.Book;
-import com.akramhossain.islamicvideo.Models.RecentlyWatched;
 import com.akramhossain.islamicvideo.Models.Category;
-
-import com.akramhossain.islamicvideo.Adapter.CustomListViewAdapter;
-
+import com.akramhossain.islamicvideo.Models.RecentlyWatched;
+import com.akramhossain.islamicvideo.Models.Video;
+import com.akramhossain.islamicvideo.Tasks.GetJsonFromUrlTask;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,10 +39,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import com.akramhossain.islamicvideo.Models.Video;
-import com.akramhossain.islamicvideo.Tasks.GetJsonFromUrlTask;
-import com.google.android.material.navigation.NavigationView;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity
     Boolean isInternetPresent = false;
     DeviceDetector dd;
     Boolean isTablet = false;
+    private static final String TOPIC_GLOBAL = "global";
 
 
     @Override
@@ -233,6 +236,25 @@ public class MainActivity extends AppCompatActivity
 
             }
         }));
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( MainActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String updatedToken = instanceIdResult.getToken();
+                Log.e("Updated Token",updatedToken);
+            }
+        });
+
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_GLOBAL).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                String msg = "Subscribed";
+                if (!task.isSuccessful()) {
+                    msg = "Subscribe failed";
+                }
+                Log.d(TAG, msg);
+            }
+        });
 
     }
 
