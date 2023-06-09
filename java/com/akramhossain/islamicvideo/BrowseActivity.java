@@ -3,10 +3,12 @@ package com.akramhossain.islamicvideo;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 
 import com.akramhossain.islamicvideo.Adapter.RecyclerViewAdapter;
 import com.akramhossain.islamicvideo.Config.ConnectionDetector;
@@ -37,7 +39,7 @@ import static com.akramhossain.islamicvideo.Config.Main.host;
  */
 
 public class BrowseActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
     public static String URL;
     private static final String TAG = BrowseActivity.class.getSimpleName();
@@ -61,6 +63,11 @@ public class BrowseActivity extends AppCompatActivity
     DeviceDetector dd;
     Boolean isTablet = false;
 
+    SearchView search;
+
+    String searchTxt = "";
+    Handler mHandler = new Handler();
+
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -72,7 +79,7 @@ public class BrowseActivity extends AppCompatActivity
             setTitle("Featured Video");
         }
 
-        URL = host+"api/search?lang=en&q=&category_id=&featured="+is_featured+"&page="+page+"&per_page=10";
+        URL = host+"api/search?lang=en&q="+searchTxt+"&category_id=&featured="+is_featured+"&page="+page+"&per_page=10";
 
         //Toast.makeText(getApplicationContext(), categoryId + " is selected!", Toast.LENGTH_SHORT).show();
         setContentView(R.layout.activity_browse);
@@ -139,7 +146,7 @@ public class BrowseActivity extends AppCompatActivity
                                 counter = (counter + 1);
                                 page = Integer.toString(counter);
                                 //Toast.makeText(getApplicationContext(), "Reached the end of recycler view", Toast.LENGTH_LONG).show();
-                                URL = host+"api/search?lang=en&q=&category_id=&featured="+is_featured+"&page="+page+"&per_page=10";
+                                URL = host+"api/search?lang=en&q="+searchTxt+"&category_id=&featured="+is_featured+"&page="+page+"&per_page=10";
                                 getDataFromInternet();
                                 //Log.i(TAG, URL);
                             }
@@ -149,6 +156,10 @@ public class BrowseActivity extends AppCompatActivity
             }
 
         });
+
+        search = (SearchView) findViewById(R.id.search);
+        search.setOnQueryTextListener(this);
+
         cd = new ConnectionDetector(getApplicationContext());
         isInternetPresent = cd.isConnectingToInternet();
         //FETCH DATA FROM REMOTE SERVER
@@ -156,6 +167,7 @@ public class BrowseActivity extends AppCompatActivity
     }
 
     private void getDataFromInternet() {
+        Log.i(TAG, URL);
         itShouldLoadMore = false;
         if (isInternetPresent) {
             new BrowseJsonFromUrlTask(this, URL);
@@ -298,5 +310,26 @@ public class BrowseActivity extends AppCompatActivity
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        searchTxt = query.trim();
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                URL = host+"api/search?lang=en&q="+searchTxt+"&category_id=&featured="+is_featured+"&page="+page+"&per_page=10";
+                int length = searchTxt.length();
+                videos.clear();
+                getDataFromInternet();
+            }
+        }, 100);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        return false;
     }
 }

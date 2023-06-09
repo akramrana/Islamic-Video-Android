@@ -6,17 +6,29 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.akramhossain.islamicvideo.BrowseActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:showIn="@layout/app_bar_browse">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <SearchView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:focusable="false"
+            android:queryHint="Search..."
+            android:layout_margin="5dp"
+            android:padding="10dp">
+        </SearchView>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/browse_video_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search"/>
 
         <ProgressBar
             android:id="@+id/progressBar"

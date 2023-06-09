@@ -6,13 +6,15 @@
         <item name="colorPrimary">@color/cardview_dark_background</item>
         <item name="colorPrimaryDark">@color/cardview_dark_background</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="NavigationView">
         <item name="android:textColorSecondary">@color/design_default_color_primary_dark</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

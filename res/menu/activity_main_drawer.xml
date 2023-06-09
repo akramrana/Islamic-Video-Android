@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <group android:checkableBehavior="single">
         <item
@@ -26,20 +25,8 @@
             android:title="@string/nav_recently_watched" />
     </group>
 
-    <item android:title="">
+    <item android:title="@string/welcome">
         <menu>
-            <!--<item-->
-                <!--android:id="@+id/nav_setting"-->
-                <!--android:icon="@drawable/ic_menu_settings"-->
-                <!--android:title="@string/menu_settings" />-->
-            <!--<item-->
-                <!--android:id="@+id/nav_new_ver"-->
-                <!--android:icon="@drawable/ic_menu_new_ver"-->
-                <!--android:title="@string/menu_check_new_version" />-->
-            <!--<item-->
-                <!--android:id="@+id/nav_rate_us"-->
-                <!--android:icon="@drawable/ic_menu_rate_us"-->
-                <!--android:title="@string/menu_rate_us" />-->
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_menu_about"
