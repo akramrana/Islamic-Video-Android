@@ -41,17 +41,25 @@
                 <!--android:icon="@drawable/ic_menu_rate_us"-->
                 <!--android:title="@string/menu_rate_us" />-->
             <item
-                android:id="@+id/nav_feed_back"
-                android:icon="@drawable/ic_menu_feedback"
-                android:title="@string/menu_help_feedback" />
-            <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_menu_about"
                 android:title="@string/menu_about" />
+
+            <item
+                android:id="@+id/nav_privacy"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="@string/pp_terms" />
+
             <item
                 android:id="@+id/nav_terms"
                 android:icon="@drawable/ic_menu_terms"
                 android:title="@string/menu_terms" />
+
+            <item
+                android:id="@+id/nav_feed_back"
+                android:icon="@drawable/ic_menu_feedback"
+                android:title="@string/menu_help_feedback" />
+
         </menu>
     </item>
 

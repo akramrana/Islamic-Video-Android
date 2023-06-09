@@ -1,7 +1,6 @@
 package com.akramhossain.islamicvideo;
 
 import android.app.AlertDialog;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,11 +25,6 @@ import com.akramhossain.islamicvideo.Listener.RecyclerTouchListener;
 import com.akramhossain.islamicvideo.Models.Video;
 import com.akramhossain.islamicvideo.Tasks.VideoPlayJsonFromUrlTask;
 import com.google.android.material.navigation.NavigationView;
-//import com.google.android.youtube.player.YouTubeInitializationResult;
-//import com.google.android.youtube.player.YouTubePlayer;
-//import com.google.android.youtube.player.YouTubePlayerFragment;
-//import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-//import com.google.android.youtube.player.YouTubePlayerSupportFragmentX;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -272,6 +266,13 @@ public class VideoPlayActivity extends AppCompatActivity
             Intent i = new Intent(getApplicationContext(), CmsActivity.class);
             i.putExtra("cms_title", "Terms and Conditions");
             i.putExtra("cms_page", "terms");
+            startActivity(i);
+            finishAffinity();
+        }
+        else if (id == R.id.nav_privacy) {
+            Intent i = new Intent(getApplicationContext(), CmsActivity.class);
+            i.putExtra("cms_title", "Privacy Policy");
+            i.putExtra("cms_page", "privacy-policy");
             startActivity(i);
             finishAffinity();
         }

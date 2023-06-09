@@ -2,24 +2,17 @@ package com.akramhossain.islamicvideo;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.GridView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.akramhossain.islamicvideo.Adapter.CategoryAdapter;
-import com.akramhossain.islamicvideo.Adapter.GridViewAdapter;
 import com.akramhossain.islamicvideo.Config.ConnectionDetector;
 import com.akramhossain.islamicvideo.Config.DeviceDetector;
 import com.akramhossain.islamicvideo.Listener.RecyclerTouchListener;
 import com.akramhossain.islamicvideo.Models.Category;
-import com.akramhossain.islamicvideo.Models.GridItem;
 import com.akramhossain.islamicvideo.Tasks.CategoryJsonFromUrlTask;
 import com.google.android.material.navigation.NavigationView;
 
@@ -27,12 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -223,6 +210,13 @@ public class CategoryActivity extends AppCompatActivity
             Intent i = new Intent(getApplicationContext(), CmsActivity.class);
             i.putExtra("cms_title", "Terms and Conditions");
             i.putExtra("cms_page", "terms");
+            startActivity(i);
+            finishAffinity();
+        }
+        else if (id == R.id.nav_privacy) {
+            Intent i = new Intent(getApplicationContext(), CmsActivity.class);
+            i.putExtra("cms_title", "Privacy Policy");
+            i.putExtra("cms_page", "privacy-policy");
             startActivity(i);
             finishAffinity();
         }

@@ -3,12 +3,12 @@ package com.akramhossain.islamicvideo;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.akramhossain.islamicvideo.Config.ConnectionDetector;
 import com.akramhossain.islamicvideo.Tasks.CmsJsonFromUrlTask;
@@ -171,6 +171,13 @@ public class CmsActivity extends AppCompatActivity
             startActivity(i);
             finishAffinity();
         }
+        else if (id == R.id.nav_privacy) {
+            Intent i = new Intent(getApplicationContext(), CmsActivity.class);
+            i.putExtra("cms_title", "Privacy Policy");
+            i.putExtra("cms_page", "privacy-policy");
+            startActivity(i);
+            finishAffinity();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -186,7 +193,7 @@ public class CmsActivity extends AppCompatActivity
             cmsTextViewTitle.setText(json.getString("title"));
 
             cmsTextViewContent = (TextView) findViewById(R.id.cms_content);
-            cmsTextViewContent.setText(json.getString("content"));
+            cmsTextViewContent.setText(Html.fromHtml(json.getString("content"),Html.FROM_HTML_MODE_LEGACY));
             cmsTextViewContent.setMovementMethod(new ScrollingMovementMethod());
 
         } catch (JSONException e) {

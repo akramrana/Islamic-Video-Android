@@ -2,28 +2,27 @@ package com.akramhossain.islamicvideo;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
-import android.content.Intent;
-import android.os.Bundle;
+import android.widget.Toast;
 
 import com.akramhossain.islamicvideo.Config.ConnectionDetector;
 import com.google.android.material.navigation.NavigationView;
@@ -481,6 +480,13 @@ public class HelpFeedbackActivity extends AppCompatActivity
             Intent i = new Intent(getApplicationContext(), CmsActivity.class);
             i.putExtra("cms_title", "Terms and Conditions");
             i.putExtra("cms_page", "terms");
+            startActivity(i);
+            finishAffinity();
+        }
+        else if (id == R.id.nav_privacy) {
+            Intent i = new Intent(getApplicationContext(), CmsActivity.class);
+            i.putExtra("cms_title", "Privacy Policy");
+            i.putExtra("cms_page", "privacy-policy");
             startActivity(i);
             finishAffinity();
         }

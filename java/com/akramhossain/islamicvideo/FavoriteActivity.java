@@ -266,6 +266,13 @@ public class FavoriteActivity extends AppCompatActivity
             startActivity(i);
             finishAffinity();
         }
+        else if (id == R.id.nav_privacy) {
+            Intent i = new Intent(getApplicationContext(), CmsActivity.class);
+            i.putExtra("cms_title", "Privacy Policy");
+            i.putExtra("cms_page", "privacy-policy");
+            startActivity(i);
+            finishAffinity();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.akramhossain.islamicvideo.Adapter.RecyclerViewAdapter;
 import com.akramhossain.islamicvideo.Config.ConnectionDetector;
@@ -258,6 +257,13 @@ public class BrowseActivity extends AppCompatActivity
             Intent i = new Intent(getApplicationContext(), CmsActivity.class);
             i.putExtra("cms_title", "Terms and Conditions");
             i.putExtra("cms_page", "terms");
+            startActivity(i);
+            finishAffinity();
+        }
+        else if (id == R.id.nav_privacy) {
+            Intent i = new Intent(getApplicationContext(), CmsActivity.class);
+            i.putExtra("cms_title", "Privacy Policy");
+            i.putExtra("cms_page", "privacy-policy");
             startActivity(i);
             finishAffinity();
         }
