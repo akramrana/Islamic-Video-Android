@@ -26,11 +26,8 @@ import com.akramhossain.islamicvideo.Models.RecentlyWatched;
 import com.akramhossain.islamicvideo.Models.Video;
 import com.akramhossain.islamicvideo.Tasks.GetJsonFromUrlTask;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
@@ -237,11 +234,24 @@ public class MainActivity extends AppCompatActivity
             }
         }));
 
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( MainActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+        /*FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( MainActivity.this,  new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 String updatedToken = instanceIdResult.getToken();
                 Log.e("Updated Token",updatedToken);
+            }
+        });*/
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Log.w("Token Retrieval", "Fetching FCM registration token failed", task.getException());
+                    return;
+                }
+                // Get new FCM registration token
+                String updatedToken = task.getResult();
+                // Log and toast
+                Log.e("Updated Token", updatedToken);
             }
         });
 
