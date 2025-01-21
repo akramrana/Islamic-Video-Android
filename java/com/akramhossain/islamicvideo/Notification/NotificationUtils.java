@@ -4,18 +4,10 @@ package com.akramhossain.islamicvideo.Notification;
  * Created by Lenovo on 9/5/2018.
  */
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,12 +16,19 @@ import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.text.Html;
 
 import com.akramhossain.islamicvideo.BrowseActivity;
 import com.akramhossain.islamicvideo.MainActivity;
 import com.akramhossain.islamicvideo.R;
 import com.akramhossain.islamicvideo.VideoPlayActivity;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Executors;
 
 import androidx.core.app.NotificationCompat;
 
@@ -71,29 +70,23 @@ public class NotificationUtils {
 
         PendingIntent resultPendingIntent;
 
+        int pendingIntentFlags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            pendingIntentFlags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+
         if (URL.equals(action)) {
             Intent notificationIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(destination));
 
-            resultPendingIntent = PendingIntent.getActivity(mContext, 0, notificationIntent, 0);
+            resultPendingIntent = PendingIntent.getActivity(mContext, 0, notificationIntent, pendingIntentFlags);
+
         } else if (ACTIVITY.equals(action) && activityMap.containsKey(destination)) {
             resultIntent = new Intent(mContext, activityMap.get(destination));
 
-            resultPendingIntent =
-                    PendingIntent.getActivity(
-                            mContext,
-                            0,
-                            resultIntent,
-                            PendingIntent.FLAG_CANCEL_CURRENT
-                    );
+            resultPendingIntent = PendingIntent.getActivity(mContext, 0, resultIntent, pendingIntentFlags);
         } else {
             resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            resultPendingIntent =
-                    PendingIntent.getActivity(
-                            mContext,
-                            0,
-                            resultIntent,
-                            PendingIntent.FLAG_CANCEL_CURRENT
-                    );
+            resultPendingIntent = PendingIntent.getActivity(mContext, 0, resultIntent, pendingIntentFlags);
         }
 
         NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -102,56 +95,37 @@ public class NotificationUtils {
 
             CharSequence name = "my_channel";
             String Description = "Islamic Video";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+
+            NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, name, NotificationManager.IMPORTANCE_HIGH);
             mChannel.setDescription(Description);
             mChannel.enableLights(true);
             mChannel.setLightColor(Color.RED);
             mChannel.enableVibration(true);
-            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-            mChannel.setShowBadge(false);
+            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500});
             notificationManager.createNotificationChannel(mChannel);
         }
 
 
         final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID);
-
-        Notification notification;
-
-        if (iconBitMap == null) {
-            //When Inbox Style is applied, user can expand the notification
-            NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-
-            inboxStyle.addLine(message);
-            notification = mBuilder.setSmallIcon(icon).setTicker(title).setWhen(0)
-                    .setAutoCancel(true)
-                    .setContentTitle(title)
-                    .setContentIntent(resultPendingIntent)
-                    .setStyle(inboxStyle)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
-                    .setContentText(message)
-                    .build();
-
-        } else {
-            //If Bitmap is created from URL, show big icon
-            NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
-            bigPictureStyle.setBigContentTitle(title);
-            bigPictureStyle.setSummaryText(Html.fromHtml(message).toString());
-            bigPictureStyle.bigPicture(iconBitMap);
-            notification = mBuilder.setSmallIcon(icon).setTicker(title).setWhen(0)
-                    .setAutoCancel(true)
-                    .setContentTitle(title)
-                    .setContentIntent(resultPendingIntent)
-                    .setStyle(bigPictureStyle)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
-                    .setContentText(message)
-                    .build();
-        }
-
-        //NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFICATION_ID, notification);
+        // Asynchronously fetch the icon bitmap
+        fetchBitmapAsync(iconUrl, bitmap -> {
+            Notification notification;
+            if (bitmap == null) {
+                // Default notification style
+                NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+                inboxStyle.addLine(message);
+                notification = mBuilder.setSmallIcon(icon).setTicker(title).setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(title).setContentIntent(resultPendingIntent).setStyle(inboxStyle).setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon)).setContentText(message).build();
+            } else {
+                // Big picture style for notifications with an image
+                NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
+                bigPictureStyle.setBigContentTitle(title);
+                bigPictureStyle.setSummaryText(message);
+                bigPictureStyle.bigPicture(bitmap);
+                notification = mBuilder.setSmallIcon(icon).setTicker(title).setWhen(System.currentTimeMillis()).setAutoCancel(true).setContentTitle(title).setContentIntent(resultPendingIntent).setStyle(bigPictureStyle).setLargeIcon(bitmap).build();
+            }
+            // Display the notification
+            notificationManager.notify(NOTIFICATION_ID, notification);
+        });
     }
 
 
@@ -176,6 +150,23 @@ public class NotificationUtils {
         }
     }
 
+    private void fetchBitmapAsync(String strURL, OnBitmapLoadedListener listener) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            try {
+                URL url = new URL(strURL);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(input);
+                listener.onBitmapLoaded(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+                listener.onBitmapLoaded(null);
+            }
+        });
+    }
+
     /**
      * Playing notification sound
      */
@@ -188,5 +179,9 @@ public class NotificationUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private interface OnBitmapLoadedListener {
+        void onBitmapLoaded(Bitmap bitmap);
     }
 }
