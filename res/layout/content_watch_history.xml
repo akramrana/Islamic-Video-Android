@@ -16,13 +16,12 @@
         <TextView
             android:id="@+id/clear_history_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_height="48dp"
             android:paddingLeft="8dp"
             android:paddingRight="5dp"
             android:text="@string/clear_history"
-            android:textColor="#3366ff"
-            android:textSize="16dp"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
             android:clickable="true"
             android:gravity="center"/>
 

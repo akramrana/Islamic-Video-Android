@@ -42,7 +42,8 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_below="@id/category_image"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 

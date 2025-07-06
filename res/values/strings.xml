@@ -44,7 +44,7 @@
     <string name="feedbackbody">Comments</string>
     <string name="feedbackresponse">Would you like an email response?</string>
     <string name="feedbackbutton">Send Feedback</string>
-    <string name="clear_history"><u>Clear History</u></string>
+    <string name="clear_history">Delete History</string>
 
     <string-array name="feedbacktypelist">
         <item>@string/feedbacktype1</item>

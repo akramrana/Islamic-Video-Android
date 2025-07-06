@@ -21,31 +21,24 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <TextView
-                android:id="@+id/TextViewTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/feedbacktitle"
-                android:textSize="10pt"></TextView>
-
             <EditText
                 android:id="@+id/EditTextName"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:hint="@string/feedbackname"
                 android:inputType="textPersonName"></EditText>
 
             <EditText
                 android:id="@+id/EditTextEmail"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:hint="@string/feedbackemail"
                 android:inputType="textEmailAddress"></EditText>
 
             <Spinner
                 android:id="@+id/SpinnerFeedbackType"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:entries="@array/feedbacktypelist"
                 android:prompt="@string/feedbacktype"></Spinner>
 
@@ -73,7 +66,7 @@
             <CheckBox
                 android:id="@+id/CheckBoxResponse"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:text="@string/feedbackresponse"></CheckBox>
 
             <Button
