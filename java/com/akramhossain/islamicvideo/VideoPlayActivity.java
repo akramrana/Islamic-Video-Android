@@ -337,11 +337,20 @@ public class VideoPlayActivity extends AppCompatActivity
 
 
 
-            String iframeStr = "https://www.youtube.com/embed/"+youtubeVideoId+"?rel=0&amp;autoplay=1";
+            String iframeStr = "https://www.youtube.com/embed/"+youtubeVideoId+"?rel=0&autoplay=1";
 
             Log.d("Youtube Url:", iframeStr);
 
-            String videoStr = "<html><body style=\"margin:0;\"><iframe style=\"width:100%; height:"+height+"px; margin:0px; border:0px;\" src=\""+iframeStr+"\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe></body></html>";
+            //String videoStr = "<html><body style=\"margin:0;\"><iframe style=\"width:100%; height:"+height+"px; margin:0px; border:0px;\" src=\""+iframeStr+"\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe></body></html>";
+
+            String videoStr =
+                    "<html><head><meta name=\"referrer\" content=\"origin\" /></head><body style=\"margin:0;padding:0;\">" +
+                            "<iframe style=\"width:100%;height:" + height + "px;border:0;\" " +
+                            "src=\"" + iframeStr + "\" " +
+                            "allow=\"autoplay; encrypted-media\" " +
+                            "referrerpolicy=\"strict-origin-when-cross-origin\" " + // safe policy
+                            "allowfullscreen></iframe>" +
+                            "</body></html>";
 
             mWebView.setWebViewClient(new WebViewClient() {
                 @Override
@@ -351,7 +360,17 @@ public class VideoPlayActivity extends AppCompatActivity
             });
             WebSettings ws = mWebView.getSettings();
             ws.setJavaScriptEnabled(true);
-            mWebView.loadData(videoStr, "text/html", "utf-8");
+            ws.setDomStorageEnabled(true);
+            ws.setMediaPlaybackRequiresUserGesture(false);
+            //mWebView.loadData(videoStr, "text/html", "utf-8");
+            String baseUrl = "https://www.youtube-nocookie.com/";
+            mWebView.loadDataWithBaseURL(
+                    baseUrl,
+                    videoStr,
+                    "text/html",
+                    "utf-8",
+                    null
+            );
 
             try {
                 SQLiteDatabase db = dbhelper.getWritableDatabase();

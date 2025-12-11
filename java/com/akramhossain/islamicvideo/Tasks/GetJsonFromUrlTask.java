@@ -10,15 +10,18 @@ import android.app.ProgressDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.akramhossain.islamicvideo.MainActivity;
 import com.akramhossain.islamicvideo.R;
 import com.akramhossain.islamicvideo.app.AppController;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import android.widget.Toast;
+import com.android.volley.toolbox.StringRequest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class GetJsonFromUrlTask{
 
@@ -54,14 +57,26 @@ public class GetJsonFromUrlTask{
 
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "Api Error: " + error.getMessage());
                 Toast.makeText(activity.getApplicationContext(),error.getMessage(), Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
             }
-        }) {};
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("User-Agent",
+                        "Mozilla/5.0 (Linux; Android 12; Pixel 5) " +
+                                "AppleWebKit/537.36 (KHTML, like Gecko) " +
+                                "Chrome/119.0 Mobile Safari/537.36");
+                headers.put("Accept", "application/json,text/html,application/xhtml+xml");
+                headers.put("Accept-Language", "en-US,en;q=0.9");
+                headers.put("Referer", "https://google.com/");
+                return headers;
+            }
+        };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
